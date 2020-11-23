@@ -68,35 +68,41 @@ Typescript no es completamente "sound": es estratégicamente "unsound" para favo
 es decir, ser más "complete".
 */
 
-function mutateArray(arr: Array<string | number>): void {
-  arr.push(3)
-}
+/* Casos de unsoundness en TS:
 
-const strings: Array<{ a: string } | undefined> = [{ a: 'a' }, { a: 'b' }]
-mutateArray(strings)
+   Array indexing
+   Invalid refinement
+   Mutable covariant arrays
+*/
 
-const s: string = strings[2]
-console.log(s.toLowerCase()) // :(
+/*Array indexing */
 
-const element = strings[10] //out of bounds
+const element = ['a', 'b'][10] //out of bounds
 element.toLowerCase()
 
+/* Invalid refinement */
+
+const numbers: Array<number | undefined> = [1, 2, undefined, 3]
 for (let i = 0; i < strings.length; i++) {
-  let element = strings[i]
+  let element = numbers[i]
   function mutateElement() {
     element = undefined
   }
   if (element !== undefined) {
-    mutateElement()
+    mutateElement() //invalid refinement: TS cree que element es de tipo number, pero element es undefined
     element
   }
 }
 
-/* Casos de unsoundness en TS 
+/* Mutable covariant arrays */
 
-   Array indexing
-   Invalid refinement
-*/
+function mutateArray(arr: Array<string | number>): void {
+  arr.push(42)
+}
+const strings: Array<string> = ['a', 'b']
+mutateArray(strings)
+
+strings[2].toLowerCase() // run-time error
 
 /* Varianza
 
@@ -109,12 +115,13 @@ for (let i = 0; i < strings.length; i++) {
   Contravariante
   Bivariante (covariante y contravariante)
 
+  Usamos "<" para indicar "es subtipo de"
 */
 
 type Animal = { a: number }
 type Dog = { a: number; b: number; c: number }
 type Spaniel = { a: number; b: number; c: number; d: number }
-// type Cat = { a: number; d: number }
+type Cat = { a: number; d: number }
 
 /* Varianza para Arrays:
 
@@ -125,7 +132,8 @@ type Spaniel = { a: number; b: number; c: number; d: number }
 */
 
 /* Array mutable covariante es unsound - puede dar lugar a type error */
-function mutateAnimalsArray(a: ReadonlyArray<Animal>): void {
+
+function mutateAnimalsArray(a: Array<Animal>): void {
   const cat: Cat = {
     a: 1,
     d: 3,
@@ -136,20 +144,20 @@ function mutateAnimalsArray(a: ReadonlyArray<Animal>): void {
 declare const dogs: Array<Dog>
 mutateAnimalsArray(dogs)
 
-const myFn = (f: () => Dog) => {
-  const dog: Dog = f()
-}
-
-function f(): Spaniel {
-  return {
+const myFn = (f: (_: Dog) => string) => {
+  const dog = {
     a: 1,
     b: 1,
     c: 1,
-    d: 1,
   }
+  const str = f(dog)
 }
 
-myFn(f)
+function g(_: Spaniel): string {
+  return _.d === 1 ? 'yes' : 'no'
+}
+
+myFn(g)
 
 /* Varianza para funciones - las funciones son "contenedores" de 2 tipos: los que toman como parámetros y los que devuelven
    como resultado de la función: A -> B
@@ -182,6 +190,6 @@ myFn(f)
                Covariantes ✅ 
   Consumidores: tipos de datos MUTABLES que van a aceptar valores.
                También funciones que reciben parámetros como input.
-               Contravariantes ✅ 
+               Invariantes o contravariantes ✅ 
 
  */

@@ -8,6 +8,7 @@ y así sucesivamente hasta que se pasen todos los argumentos de la función orig
 
 */
 import { map, reduce } from './9.1map-filter-reduce'
+import { prop } from './12.3utils'
 
 const add = (a: number, b: number): number => a + b
 const inc = (x: number) => add(x, 1)
@@ -15,10 +16,6 @@ const addCurried = (a: number) => (b: number): number => a + b
 const incCurried = addCurried(1)
 
 /* Point-free programming / tacit programming */
-
-const prop = <T, K extends keyof T>(propertyName: K) => (o: T): T[K] => {
-  return o[propertyName] // o[propertyName] :: T[K]
-}
 
 const people = [
   { name: 'Marcos', age: 3 },
