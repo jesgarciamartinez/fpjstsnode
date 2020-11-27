@@ -1,4 +1,4 @@
-/* Transformando código de bajo nivel en utilidades funcionales */
+/* Transforming low-level code into functional utilities */
 
 type Person = {
   name: string
@@ -12,7 +12,7 @@ const people: Person[] = [
   { name: 'Javi', age: 29 },
 ]
 
-/* Transformar un array en otro */
+/* Transform an array into another array */
 
 const ages = []
 for (let i = 0; i < people.length; i++) {
@@ -34,7 +34,7 @@ export const map = <A, B>(f: (_: A) => B, as: A[]): B[] => {
 const ages2 = map(({ age }) => age, people)
 console.log(ages2) //-> [3,27,38,29]
 
-/* Descartar algunos elementos de un array */
+/* Discard some elements from an array */
 
 const adults = []
 for (let i = 0; i < people.length; i++) {
@@ -62,9 +62,7 @@ const isAdult = (x: Person): boolean => x.age > 18
 const adults2 = filter(isAdult, people)
 console.log(adults2) //->   [{ name: 'Laura', age: 27}, { name: 'Luis', age: 38 }, { name: 'Javi', age: 29 }]
 
-// const isAdult2 = (person: Person): person is Adult => person.age > 18
-
-/* Convertir un array a cualquier otro tipo de dato */
+/* Transform an array into any other type */
 
 let totalAge = 0
 for (let i = 0; i < people.length; i++) {

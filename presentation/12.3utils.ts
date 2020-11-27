@@ -81,7 +81,7 @@ export const flatMap_ = <A, B>(f: (_: A) => Array<B>, as: Array<A>): Array<B> =>
   flatMap(f)(as)
 
 export function pick<T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> {
-  const ret: any = {} // incompleteness, esto funciona, pero tenemos que usar el cast a any
+  const ret: any = {} // incompleteness, this should work, but we have to cast to any
   keys.forEach(key => {
     ret[key] = obj[key]
   })

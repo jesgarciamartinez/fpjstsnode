@@ -1,14 +1,14 @@
-/* Valores primitivos JS */
+/* JS primitives */
 
 const str: string = 'a string'
 const num: number = 3
 const bool: boolean = true
-// const nothing: null = null
-// const undef: undefined = undefined
+const nothing: null = null
+const undef: undefined = undefined
 
-/* Valores primitivos TS */
+/* TS primitives */
 
-let unknownType: null = undefined
+let unknownType: unknown = undefined
 
 if (typeof unknownType === 'number') {
   add(unknownType, 3)
@@ -36,11 +36,9 @@ function processUnion(u: union): number {
   }
 }
 
-/* Tipos producto - Objetos y Arrays */
+/* Product types - Objects, Tuples and Arrays */
 
 let foo: object
-
-Object
 
 const object: { a: string; another: string } = { a: str, another: str }
 const tuple: [string, number] = ['Marcos', 3]
@@ -70,7 +68,7 @@ const obj: myType = {
   hola: 3,
 }
 
-/* Funciones */
+/* Functions */
 
 const exclaim: (_: string) => string = s => s + '!'
 
@@ -82,7 +80,7 @@ function exclaim3(s: string): string {
   return s + '!'
 }
 
-/* Funciones genéricas */
+/* Generic functions */
 
 type idType = <A>(_: A) => A
 

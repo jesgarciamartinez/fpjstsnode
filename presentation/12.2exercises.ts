@@ -20,23 +20,24 @@ type Feature = {
   deployStatus: 'dev' | 'pre' | 'pro'
   accesibleToUserRoles: Set<UserRole>
 }
+/* In the following exercises, practice thinking of the types of the functions you need before implementing them (type-first development) */
 
-/* 1. A partir de un Array de Product, obtén los totales y listas de usuarios por cada UserRole */
-/* 2. A partir de un Array de Product, obtén los totales y listas de usuarios por franja de edad, distinguiendo  U < 20,  20 <= U <= 30, y U > 30 */
-/* 3. A partir de un Array de Product, obtén una lista de usuarios que tienen más de un producto */
-/* 4. A partir de un Array de Product, obtén una lista de Features que estén en 'pro' y sean de pago (disponibles sólo para paidCustomer y enterpriseCustomer) */
+/* 1. Take an Array of Product and get the total number and lists of users for every UserRole */
+/* 2. Take an Array of Product and get the total number and lists of users for the following age ranges: U < 20,  20 <= U <= 30, y U > 30 */
+/* 3. Take an Array of Product and get a list of users with more than one product */
+/* 4. Take an Arary of Product and get a list of Features that are in 'pro' and paid (available only for paidCustomer and enterpriseCustomer) */
 
 declare const currentUserRole: UserRole
 
-/* 5. Asumiendo que tenemos una variable currentUserRole, y queremos realizar la operación dangerousOperation sólo cuando currentUserRole es 'admin',
-      ¿cómo harías que esta operación fuera segura en tiempo de compilación?
+/* 5. Assuming we have a currentUserRole variable and we want to do dangerousOperation only when currentUserRole is 'admin',
+      how would you ensure this condition is met in compile-time?
 */
 
-/* 6. Asumiendo que tenemos una variable currentUserRole, queremos que avanzar el status de una Feature sólo pueda hacerlo un usuario admin
-      y siguiendo el orden implícito en dev -> pre -> pro. ¿Cómo podríamos asegurarnos de esto en tiempo de compilación?
+/* 6. Assuming we have a currentUserRole variable and we want to advance the `status` of a Feature only if it's 'admin'
+      and following the implicit order in dev -> pre -> pro, how could we be sure of this at compile-time?
  */
 
-/* Soluciones */
+/* Solutions */
 
 import { pipe, flow } from './11.1fp-ts-pipe'
 import { flatMap, prop, reduce } from './12.3utils'
@@ -77,6 +78,7 @@ function productArrayToUsersByRole(products: Product[]): UsersByRole {
   )
 }
 
+/* How could we capture the invariant that User[] needs to be an array of _unique_ users? */
 const usersToUsersByRole: F1<User[], UsersByRole> = reduce(
   (acc, user) => {
     acc[user.role].total += 1

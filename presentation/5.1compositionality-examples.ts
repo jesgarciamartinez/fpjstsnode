@@ -1,10 +1,10 @@
 /*
  *
- * Ejemplos de composicionalidad
+ * Compositionality examples
  *
  */
 
-/* Sumas, restas, multiplicaciones de números */
+/* Sums, products of numbers */
 
 const one: number = 1
 const two: number = 2
@@ -12,7 +12,7 @@ const three: number = 3
 
 1 + (2 + 3) === 1 * 2 * 3
 
-/* ¡Pero no división! */
+/* ¡But not division! */
 
 1 / 0 //-> NaN
 

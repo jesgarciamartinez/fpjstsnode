@@ -1,5 +1,6 @@
-/* ¿Qué tienen en común funciones como compose, id, apply? 
-   En su implementación tan sólo se usan los parámetros que reciben y aplicación de funciones.
+/* ¿Qué functions like compose, id, apply have in common? 
+   Their implementation only uses the parameters they take and function application
+   These exercises are not for practical use, but to explore point-free programming!
 
    https://gist.github.com/Avaq/1f0636ec5c8d6aed2e45
 */
@@ -25,7 +26,9 @@ const length = (arr: unknown[]) => arr.length
 
 const compareArrayLengths = psi(greaterThan)(length)([1, 2, 3])([1, 2, 3, 4]) // -> false
 
-/* blackbird :: (c -> d) -> (a -> b -> c) -> a -> b -> d */
+/* blackbird :: (c -> d) -> (a -> b -> c) -> a -> b -> d 
+  See also: https://github.com/ccorcos/functional-decarative-javascript-preso
+*/
 // const blackbird = cd => abc => a => b => cd(abc(a)(b))
 const blackbird = compose(compose)(compose)
 

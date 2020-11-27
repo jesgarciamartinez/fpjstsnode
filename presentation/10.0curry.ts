@@ -1,10 +1,9 @@
 /*
 
-Curry
+Currying
 
-Convertir una función variádica en una función de un sólo argumento, 
-que retorna una función que toma el siguiente argumento 
-y así sucesivamente hasta que se pasen todos los argumentos de la función original.
+Transform a variadic function into a single-parameter function that returns another function that takes
+the next parameter, and so on until all parameters in the original function have been applied
 
 */
 import { map, reduce } from './9.1map-filter-reduce'
@@ -27,6 +26,10 @@ const people = [
 people.map(prop('age')).reduce(add, 0) //-> 97
 
 reduce(add, 0, map(prop('age'), people)) //-> 97
+
+/* While common in typed functional programming, TS type inference does not handle currying very well.
+   Point-free programming is discouraged in the TS docs: https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#point-free-programming 
+ */
 
 export function curry(fn) {
   let arity = fn.length

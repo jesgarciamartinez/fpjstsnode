@@ -1,10 +1,8 @@
 /*
-  Supongamos que queremos modelar un hotel con diferentes habitaciones:
-  Hay habitaciones normales (regular), premium y deluxe. 
-  Asimismo, las habitaciones normales pueden tener una promoción (roomPromotion), y las premium/deluxe
-  pueden incluir servicio de desayuno (breakFastService).
+  Let's suppose we want to model a hotel with different types of rooms: regular, premium and deluxe.
+  Regular rooms can have a promotion (`roomPromotion`) and premium/deluxe rooms may include `breakfastService`.
   
-  Este es el modelo de datos que tenemos:
+  This is our data model - do you see anything wrong with this?
  */
 
 type Room = {
@@ -24,7 +22,7 @@ type Room = {
 }
 
 /*
-  Supongamos que queremos modelar una llamada HTTP:
+  Let's model an HTTP call:
  */
 type NetworkRequest<T> = {
   loading: boolean
@@ -33,7 +31,7 @@ type NetworkRequest<T> = {
   statusCode?: number
 }
 
-/* ¿Cuál es el tipo de los callback de Node? nodebacks
+/* ¿Whats the type of node callbacks (nodebacks)?
  */
 type Cb = <T>(err?: Error, data?: T) => void
 declare function readFile(path: string, callback: Cb): void
@@ -45,17 +43,17 @@ Error string ❌
 undefined undefined ❌
 */
 
-/* ¿Qué tienen en común estos ejemplos? */
+/* ¿Qué do these examples have in common? */
 
 /*
 
-Cardinalidad: Número de habitantes (posibles valores) de un tipo.
-P. ej: el tipo boolean tiene cardinalidad 2: true y false
+Cardinality: number of inhabitants (possible values of) a type.
+E.g: the boolean type has cardinality 2: `true` and `false`
 */
 
 /*
-Tipos producto
-Collección de tipos, indexada por un set I.
+Product types
+A collección of types, indexed by a set I.
 */
 declare const tuple1: [string] // I == 0
 declare const tuple2: [string, string] // I == 0,1
@@ -68,15 +66,15 @@ type Person = {
 
 declare const myArray: string[] //I == 0,1,2,3,...
 
-declare const tuple4: [null, 'one' | 'two' | 'three']
+declare const tuple4: [null, 'one' | 'two' | 'three'] // cardinality: 3
 
-/* Se llaman producto porque su cardinalidad es el producto de las cardinalidades de los tipos que lo constituyen.
-   Intuitivamente, todas las combinaciones posibles */
+/* They are called product types because their cardinality is the product of the cardinalities of the types they are made of.
+   Intuitively, all possible combinations */
 
 /*
 
-Tipos suma
-Tipos de dato que pueden ser una de varias posibilidades, distinguidas por un "tag".
+Sum types
+Data types that can be one of several possibilities, differentiated by a "tag".
 
 */
 type Breakfast = 'option1' | 'option2'
@@ -105,7 +103,7 @@ type NetworkRequest2<T> =
   | { type: 'success'; status: number; data: T }
   | { type: 'error'; status: number; message: string }
 
-/* Con Enum en vez de string literals */
+/* With `const Enum` instead of string literals */
 
 const enum NetworkRequestEnum {
   Loading,
@@ -122,22 +120,20 @@ type BetterCallbackApi<T> =
   | { type: 'error'; message: string }
   | { type: 'succcess'; data: T }
 
-// tagged sum types //disjoint unions
-
-/* Se llaman suma porque su cardinalidad es la suma de las cardinalidades de los tipos que lo constituyen.
-   Intuitivamente, la cardinalidad de cada uno de sus constituyentes */
+/* They are called sum types because their cardinality is the sum of cardinalities of the types they are made of.
+   Intuitively, the cardinality of every type  */
 
 /*
-¿Cuándo usamos tipos suma o producto?
+When do we use product or sum types?
 
-Tipos producto - cuando sus propiedades son independientes entre sí, todas las combinaciones son validas.
-Tipos suma - cuando hay dependencias entre propiedades que podemos agrupar para acotar el espacio de estados posibles.
-y hacer los estados inválidos irrepresentables.
+Product types - when their properties are independient from each other, all combinations are valid.
+Sum types - when there's dependencies between properties that we can group together so as to narrow down the state space.
+In that way we _make invalid states unrepresentable_.
 */
 
 /*
- Cómo consumimos tipos suma?
- TS nos provee de "pattern matching" con "exhaustiveness checking"
+ How do we consume sum types?
+ TS provides us a sort of "pattern matching" with "exhaustiveness checking"
 */
 
 function assertNever(x: never): never {
@@ -145,24 +141,27 @@ function assertNever(x: never): never {
 }
 
 function hasBreakFastService(room: Room2): boolean {
-  return !!room.breakFastService //incomplete, esto no da error y TS lo marca como error
+  return !!room.breakFastService //incompleteness, this will not be a runtime error, but TS flags it as one
 }
 
 function hasBreakFastService2(room: Room2): boolean {
+  /* to ensure exhaustiveness checking, we can write the return type...*/
   switch (room.type) {
-    case 'DeluxeSuite': // refinamiento, TS sabe que a partir de aquí room es de tipo 'DeluxeSuite'
+    case 'DeluxeSuite': // refinement, TS knows from this point on room is a 'DeluxeSuite'
       return !!room.breakfastService
     case 'PremiumRoom':
       return !!room.breakfastService
     case 'RegularRoom':
       return true
     default:
+      /*... or we can assign `room` to `never` in the default branch*/
       assertNever(room)
     //   let x: never = room
   }
 }
 
-/* Creando nuestra propia función match */
+/* Switches, if-statments and ternary conditional statements are not very ergonomic pattern matching.
+   Can we create our own type-safe `match` function? */
 
 type Thunk<A> = () => A
 type ValueOrThunk<A> = A | Thunk<A>
@@ -194,7 +193,7 @@ export function match<T extends Key, Ret>(prop: T, obj: any): Ret {
   return getValue<Ret>(valueOrThunkOrUndefined)
 }
 
-/* Ejemplo de uso */
+/* Usage example */
 
 type DirectionLiterals = 'north' | 'east' | 'south' | 'west'
 const enum DirectionEnum {
@@ -221,6 +220,8 @@ function DirectionLiteralsToString(d: DirectionLiterals): string {
   })
   return result
 }
+
+/* Similar function for predicates (no exhaustiveness checking) */
 
 type Predicate<T> = (t: T) => boolean
 export function matchP<T extends Key, Ret>(

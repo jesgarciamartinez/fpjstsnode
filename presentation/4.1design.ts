@@ -1,7 +1,4 @@
-/* 
-  Linus Torvalds: “Bad programmers worry about the code. Good
-  programmers worry about data and their relationships.” 
- */
+/* Types let us communicate intent */
 
 type Product = {
   id: string
@@ -35,7 +32,7 @@ function program(products: Product[]): NumberOfUsersByRole {
     freeCustomer: 0,
     paidCustomer: 0,
     enterpriseCustomer: 0,
-    admin: 0,
+    adminCustomer: 0, // Types catch this typo
   }
   if (products.length === 0) {
     return result

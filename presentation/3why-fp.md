@@ -8,6 +8,6 @@ title: "VSCode Reveal intro"
 enableTitleFooter: false
 ---
 
-### ¿Por qué programación funcional?
-- Plano de diseño aparente mediante tipos{.fragment}
-- Composicionalidad{.fragment}
+### ¿Why functional programming?
+- Design level explicit with types{.fragment}
+- Compositionality{.fragment}

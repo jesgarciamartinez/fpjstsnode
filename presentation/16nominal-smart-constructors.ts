@@ -1,13 +1,13 @@
 /**
- * TS tiene un sistema de tipos estructural, pero a veces queremos diferenciar dos tipos con la misma estructura.
+ * TS is a structural type system, but sometimes we want to be able to differentiate two types with the same structure.
  */
 
-/* Primero: intersection types */
+/* First: intersection types*/
 
-type USD = number & { readonly _brand: unique symbol } //"Abusando" un intersection type
-// type USD = number & { readonly _brand?: unique symbol } // permite casting de number
+type USD = number & { readonly _brand: unique symbol } // "Abusing" an intersection type
+// type USD = number & { readonly _brand?: unique symbol } // allows casting number
 
-type EUR = number & { readonly _brand: unique symbol } //"Abusando" un intersection type
+type EUR = number & { readonly _brand: unique symbol }
 
 let dollars: USD = 3 as USD
 let euros: EUR = 3 as EUR
@@ -17,13 +17,13 @@ euros = dollars
 type Branded<A, B> = A & { readonly _brand: B }
 type CastableBranded<A, B> = A & { readonly _brand?: B }
 
-type Pound = Branded<number, 'Pound'> // Menos seguro, puede haber strings repetidas
+type Pound = Branded<number, 'Pound'> // Less safe, could have repeated strings
 type CastablePound = CastableBranded<number, 'CastablePound'>
 
 const pound: Pound = 3
 const castablePound: CastablePound = 3
 
-/* Patrón Smart constructor */
+/* Smart constructors */
 
 declare const people: Array<Person>
 
@@ -66,7 +66,7 @@ function narrow<A, B extends A>(f: (_: A) => B | null, as: A[]): B[] {
 
 const adults = narrow(makeAdult, people)
 
-/* Generalizando el patrón Smart constructor */
+/* More general smart constructors */
 
 type Nullable<T> = T | null
 type Refinement<P, T extends P> = (x: P) => x is T
@@ -84,8 +84,10 @@ const refineWith2: <P, T extends P>(
 const makeAdult2 = refineWith(isAdult)
 const adults2 = narrow(makeAdult2, people)
 
-/* Restringiendo parámetros de funciones */
+/* Dealing with unsoundness
+  See article: https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/
+*/
 
-const head = <A>(as: Array<A>): A => as[0] // unsound, puede devolver undefined y dar un error en runtime
-const head2 = <A>(as: Array<A>): A | undefined => as[0] // sound, los consumidores de head2 tienen que tratar la posibilidad de undefined
-const head3 = <A>(as: NonEmptyArray<A>): A => as[0] // sound, obliga a hacer un check de que el array no está vacío antes de llamar a head3
+const head = <A>(as: Array<A>): A => as[0] // unsound, can return undefined and error out in runtime
+const head2 = <A>(as: Array<A>): A | undefined => as[0] // sound, consumers of head2 must deal with undefined
+const head3 = <A>(as: NonEmptyArray<A>): A => as[0] // sound, requires checking that the array is not empty before calling head3

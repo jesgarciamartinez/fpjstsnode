@@ -1,17 +1,17 @@
-/* Técnicas para inmutabilidad JS */
+/* Immutability techniques in JS */
 
 /*
-  Modificar un objeto  
+  Modify an object
 */
 
 const o = { a: 1, b: 2, nested: { prop1: 4, prop2: 5 } }
-const newO = { ...o, b: 3 } //equivalente a Object.assign({}, o, {b: 3})
+const newO = { ...o, b: 3 } //equivalent to Object.assign({}, o, {b: 3})
 const newNested = { ...o, nested: { ...o.nested, prop2: 6 } }
 
-/* Modificar un array */
+/* Modify an array */
 
 /**
- * Métodos de Array que mutan el array sobre el que operan
+ * Array methods that mutate the array they operate on
  */
 
 const array: number[] = [1, 2, 3]
@@ -24,10 +24,10 @@ array.reverse() //-> array: [3,2,1]
 array.sort() //-> array: [1,2,3]
 array.splice(0, 1) //-> array: [2,3]
 
-const newArray = [...array] // equivalente a array.slice()
-const arrayWithNewItem = [...array.slice(0, 1), item, array.slice(1)]
+const newArray = [...array] // equivalent to array.slice()
+const arrayWithNewItem = [...array.slice(0, 1), 'item', array.slice(1)]
 
-/* Técnicas para inmutabilidad TS */
+/* Immutability techniques in TS */
 
 /* Readonly props */
 
@@ -43,18 +43,18 @@ const objWithReadonlyProps: ObjWithReadonlyProps = {
 
 objWithReadonlyProps.b = 'impossible'
 
-/* Readonly arrays no permiten usar métodos que mutan el array*/
+/* Readonly arrays don't allow methods that mutate the array*/
 
 const roArray: ReadonlyArray<number> = [1, 2, 3]
 roArray.push(4)
 
-/* Tipo Readonly recursivo 
+/* Recursive readonly type
    https://github.com/krzkaczor/ts-essentials#deep-wrapper-types
 */
 
-/* Librerías para inmutabilidad
-   Usan structural sharing para evitar problemas de memoria al crear constantemente nuevos objetos
-   Immutable usa lazyness (con `Seq`) para evitar problemas de performance al aplicar varias transformaciones
+/* Immutability libraries
+   They use structural sharing to avoid memory problems associated with frequently creating new objects
+   Immutable uses lazyness (with its `Seq` type) to avoid performance problems when applying several transformations
 */
 
 /* Immutable.js */

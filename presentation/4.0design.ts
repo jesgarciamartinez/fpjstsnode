@@ -1,4 +1,4 @@
-/* ¿Qué hace este programa? */
+/* What does this program do? You'll have to look at the _implementation_ to find out*/
 
 function program(products) {
   const result = {

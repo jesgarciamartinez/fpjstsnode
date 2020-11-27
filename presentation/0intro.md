@@ -8,22 +8,28 @@ title: "VSCode Reveal intro"
 enableTitleFooter: false
 ---
 
-#### Programación funcional con JavaScript y TypeScript en Node.js
+#### Functional programming with Typescript
 
 ---
 
-## ¿Por qué programación funcional?
+## Why functional programming
 
-#### ¿Qué propiedades queremos que tenga nuestro software?{.fragment}
+### What properties do we want our software to have?
 
-- Corrección{.fragment}
-- Flexibilidad{.fragment}
-
+- Correctness
+  The software does what it's supposed to do, i.e., reflects its _design_
+- Flexibility
+  The software is easy to modify as the design (requirements) change
 --
 
 ![CRUD](zcrud.png)
 
 --
+
+## So why functional programming
+
+- Make design explicit with types{.fragment}
+- Compositionality{.fragment}
 
 ### Links
 
