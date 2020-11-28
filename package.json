@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "ts-node": "ts-node $npm_config_file",
+    "test": "ts-node $npm_config_file | tap-spec",
     "tsc": "tsc",
     "tscWatch": "tsc --watch",
     "dev": "npm run tsc && node --inspect ./build/index.js",
@@ -12,11 +14,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^14.14.7",
-    "typescript": "^4.0.5"
+    "@types/node": "^14.14.10",
+    "fast-check": "^2.7.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^5.0.1",
+    "tape-catch": "^1.0.6",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1"
   },
   "dependencies": {
+    "fastify": "^3.8.0",
     "immer": "^8.0.0",
-    "immutable": "^4.0.0-rc.12"
+    "immutable": "^4.0.0-rc.12",
+    "zod": "^1.11.10"
   }
 }
