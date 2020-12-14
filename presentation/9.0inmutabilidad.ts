@@ -25,7 +25,7 @@ array.sort() //-> array: [1,2,3]
 array.splice(0, 1) //-> array: [2,3]
 
 const newArray = [...array] // equivalente a array.slice()
-const arrayWithNewItem = [...array.slice(0, 1), item, array.slice(1)]
+const arrayWithNewItem = [...array.slice(0, 1), item, ...array.slice(1)]
 
 /* Técnicas para inmutabilidad TS */
 
