@@ -1,5 +1,5 @@
 export type Product = {
-  id: string
+  id: string /* ¿Podríamos usar otro tipo mejor para ids? */
   users: User[]
   features: Feature[]
 }

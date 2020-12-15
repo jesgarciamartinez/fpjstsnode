@@ -145,7 +145,7 @@ function assertNever(x: never): never {
 }
 
 function hasBreakFastService(room: Room2): boolean {
-  return !!room.breakFastService //incomplete, esto no da error y TS lo marca como error
+  return 'breakFastService' in room ? !!room.breakFastService : false //incomplete, esto no da error y TS lo marca como error
 }
 
 function hasBreakFastService2(room: Room2): boolean {
@@ -158,7 +158,7 @@ function hasBreakFastService2(room: Room2): boolean {
       return true
     default:
       assertNever(room)
-    //   let x: never = room
+    // let x: never = room
   }
 }
 
