@@ -75,7 +75,7 @@ declare const tuple4: [null, 'one' | 'two' | 'three'] // cardinality: 3
 ```
 
 They are called product types because their cardinality is the product of the cardinalities of the types they are made of.
-Intuitively, all possible combinations
+Intuitively, all possible combinations.
 
 ### Sum types
 
@@ -129,7 +129,7 @@ type BetterCallbackApi<T> =
 ```
 
 They are called sum types because their cardinality is the sum of cardinalities of the types they are made of.
-Intuitively, the cardinality of every type.
+Intuitively, the cardinality of every type in the sum.
 
 ### When do we use product or sum types?
 
@@ -139,7 +139,7 @@ In this way we _make invalid states unrepresentable_.
 
 ### How do we consume sum types?
 
-TS provides us a sort of "pattern matching" with "exhaustiveness checking"
+TS provides us a sort of _pattern matching_ with _exhaustiveness checking_
 
 ```ts
 function assertNever(x: never): never {

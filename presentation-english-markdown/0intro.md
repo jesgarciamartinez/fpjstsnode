@@ -12,13 +12,17 @@
 - Make design explicit with types
 - Compositionality
 
-![design](zdesign-code-runtime-diagram.png)
+We can think of our software as derived from a design.
+There's several ways to check if our code matches our design, ordered in the
+image depending on how close they are to the design or code levels.
 
-<small><a href="http://www.pathsensitive.com/2018/01/the-three-levels-of-software-why-code.html">3 levels of software</a></small>
+<small>See <a href="http://www.pathsensitive.com/2018/01/the-three-levels-of-software-why-code.html">3 levels of software</a></small>
+
+![design](zdesign-code-runtime-diagram.png)
 
 ## Course contents
 
-1. [Explicit design with types](1design.md)
+1. [Explicit design with types](1types-explicit-design.md)
 2. [Compositionality](2compositionality.md)
 3. [Brief history of JS and TS](3brief-history.md)
 4. [Basic JS and TS types](1types-explicit-design.md)
