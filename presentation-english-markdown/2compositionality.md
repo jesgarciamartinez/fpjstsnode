@@ -15,7 +15,7 @@ const one: number = 1
 const two: number = 2
 const three: number = 3
 
-1 + (2 + 3) === 1 * 2 * 3
+1 + (2 + 3) === 1 + 2 + 3
 ```
 
 But not division!
@@ -27,7 +27,7 @@ But not division!
 ### String methods
 
 ```ts
-const myString: string = 'La composicionalidad está muy bien '
+const myString: string = 'Compositionality '
   .trim()
   .toUpperCase()
 ```
