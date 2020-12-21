@@ -20,7 +20,7 @@ Maybe is a _functor_, for our intents and purposes a data structure we can _map_
 Functors must obey _laws_:
 
 - `map(id) == id`
-- - ` map (f ∘ g) == (map f) ∘ (map g)`
+- ` map (f ∘ g) == (map f) ∘ (map g)`
 
 ```ts
 const flatMap = <A, B>(f: (a: A) => Maybe<B>) => (ma: Maybe<A>): Maybe<B> =>
